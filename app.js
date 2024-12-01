@@ -1,12 +1,14 @@
-// npm i express mongoose ejs nodemon method-override 
+// npm i express mongoose ejs nodemon method-override ejs-mate
 
-
+// create public folder to serve static files like css styling, js logics with ur templates
 
 const express=require('express')
 const mongoose=require('mongoose')  
 const methodOverride=require('method-override')
 const ejs=require('ejs')
 const path=require('path')
+const ejsMate=require('ejs-mate')   // create layouts   // add this in files where u want same layout <%-layout('boilerplate)%>
+
 
 const ListingModel = require('./Models/ListingModel')
 
@@ -21,6 +23,8 @@ app.set('views',path.join(__dirname,'views'))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
+app.engine('ejs',ejsMate)
+app.use(express.static(path.join(__dirname, '/public')))
 
 
 //connecting to database
