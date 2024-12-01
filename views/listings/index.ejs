@@ -1,24 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<% layout('/layouts/boilerplate.ejs') %>
+
+
 <body>
       <h2>All Listings</h2>
-        <form method="GET" action="/listings/new">
+        <!-- <form method="GET" action="/listings/new">
             <button>Create New Listing</button>
-        </form>
-       <ul>
+        </form> -->
+         <!-- single card will shown on small screen size ,2 on medium size, 3 on large screen size -->
+
+         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+
+            
+            <%for(let listing of allListings){%> 
+
+                <a class="listing-link" href="/listings/<%=listing._id%>">
+                <div class="card cols" >
+                    <img src="<%=listing.image.url%>" class="card-img-top" style="height:20rem" alt="listing_image">
+                    
+                      <div class="card-img-overlay"> </div>
+                    <div class="card-body">
+                   <b><p class="card-text"><%=listing.title%>.</p></b>
+                      <br/>
+                      <p class="card-text">&#8377;<%=listing.price.toLocaleString("en-IN")%> /night</p>
+                   
+                </div>
+                  </div>
+                </a>
+
+                  <%}%>
+           
+         </div>
+        
+      
+
+        <!-- <ul>
         <%for(let listing of allListings){%>
             <li>
                 <a href="/listings/<%=listing._id%>"><%=listing.title%></a>
             </li>   
        <%}%>
-       </ul>
-</body>
-</html>
+       </ul> -->
 
 
 
