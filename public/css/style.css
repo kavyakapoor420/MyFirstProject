@@ -1,0 +1,91 @@
+body{
+    background-color: rgb(194, 193, 193) !important;
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+}
+.container{
+    flex: 1;
+}
+/* styling of navbar */
+.navbar{
+    height: 5rem;
+    background-color: #222;
+}
+.navbar-brand{
+    color: tomato !important;
+}
+.fa-solid{
+    color: brown;
+    font-size: 2rem;
+}
+.nav-link{
+    color:#fff !important;
+}
+/* styling of footer */
+.footer-info-links a{
+   text-decoration: none;
+   color: #222;
+}
+.footer-info-socials,
+.footer-info-links,
+.footer-info-brand {
+     width: 100%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
+
+.footer-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+.footer-info-links a:hover{
+    text-decoration: underline;
+}
+.footer-info{
+    display: flex;
+    text-align: center;
+    height: 8rem;
+    color: #222;
+    background-color:grey ;
+    flex-wrap: wrap;
+    align-items: space-evenly;
+    justify-content: center;
+}
+
+/* styling for card -> content of listing */
+.card{
+    border: none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    /* border-radius: 1rem !important; */
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding:0 !important;
+}
+.card-text{
+    font-weight: 500;
+}
+.listing-link{
+    text-decoration: none;
+}
+/* to give effect when clicked on card-Overlay effect */
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    opacity: 0.3;
+    background-color:#fff;
+}
+
+/* styling for show.ejs page  */
+.show-image{
+     height: 30vh;
+}
+.btns{
+    display: flex;
+}
