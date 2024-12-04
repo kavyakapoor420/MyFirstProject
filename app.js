@@ -11,10 +11,13 @@ const ejsMate=require('ejs-mate')   // create layouts   // add this in files whe
 
 
 const ListingModel = require('./Models/ListingModel')
+const ReviewModel=require('./Models/ReviewModel.js')
+
 const wrapAsync=require('./utils/wrapAsync.js')
 const ExpressError=require('./utils/ExpressErrorClass.js')
-const {listingSchema}=require('./schema.js')
+const {listingSchema,reviewSchema}=require('./schema.js')
 const {validateListing}=require('./middleware/validateListings.js')
+const {validateReview}=require('./middleware/validateReview.js')
 
 const app= express()
 
@@ -63,7 +66,7 @@ app.get('/listings/new',wrapAsync(async(req,res)=>{
 //show route -> will display particular listing
 app.get('/listings/:id',wrapAsync(async(req,res)=>{
     let {id}=req.params
-    const listing=await ListingModel.findById(id)
+    const listing=await ListingModel.findById(id).populate('reviews')
     res.render('listings/show.ejs',{listing})
 }))
 // //create route
@@ -117,6 +120,34 @@ app.delete('/listings/:id',wrapAsync(async(req,res)=>{
   let {id}=req.params 
   await ListingModel.findByIdAndDelete(id)
   res.redirect('/listings')
+}))
+
+//Reviews
+
+//post route when user submit form by entering some comment and give rating on show.ejs this review will submited
+// also do client(form) side validation and server side validation that a valid review(comment,rating ) should be provided by user
+app.post('/listings/:id/reviews',validateReview,wrapAsync(async(req,res)=>{
+      const {id}=req.params ;
+      let  listing=await ListingModel.findById(id)
+     let newReview =new ReviewModel(req.body.review)
+
+     listing.reviews.push(newReview)
+
+     await newReview.save()
+      await listing.save()
+
+      console.log('new reviews saved',newReview)
+      res.redirect(`/listings/${listing._id}`)
+}))
+
+// delete review route
+app.delete('/listings/:id/reviews/:reviewId',wrapAsync(async(req,res)=>{
+       let {id,reviewId}=req.params ;
+       await ListingModel.findByIdAndUpdate(id,{$pull:{reviews:reviewId}})
+
+       await ReviewModel.findByIdAndDelete(reviewId)
+
+       res.redirect(`/listings/${id}`)
 }))
 
 app.get('/',(req,res)=>{
