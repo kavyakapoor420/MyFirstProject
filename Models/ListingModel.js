@@ -1,5 +1,8 @@
 const mongoose=require('mongoose');
 
+const ReviewModel=require('../Models/ReviewModel.js')
+
+
 const listingSchema=new mongoose.Schema({
     title: {type: String, required: true},
     description: {type: String},
@@ -16,8 +19,20 @@ const listingSchema=new mongoose.Schema({
     },
     price: {type: Number},
     location:String,
-    country: String
+    country: String,
+    reviews:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"ReviewModel"
+        }
+    ]
    
+})
+//post mongoose middleware to delete reviews if particular listing is deleted  then reviews corresponding to it will also be deleted
+listingSchema.post("findOneAndDelete",async(listing)=>{
+    if(listing){
+        await ReviewModel.deleteMany({_id:{$in:listing.reviews}})
+    } 
 })
 
 const ListingModel=mongoose.model('ListingModel',listingSchema)

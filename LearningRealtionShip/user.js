@@ -128,3 +128,37 @@ const getData=async()=>{
 }
 
 addData() 
+
+
+
+const addCust=async()=>{
+    let newCust=new CustomerModel({
+        name:"rakesh"
+    })
+    let newOrder=new OrderModel({
+        item:"MacBurger",price:20
+    })
+
+    newCust.orders.push(newOrder)
+    await newOrder.save()
+    await newCust.save() 
+    console.log("added new customer")
+}
+
+addCust()
+
+// we want if a customer is deleted then its order has to also deleted
+const delCust=async()=>{
+    let deletedCust=await CustomerModel.findByIdAndDelete()
+    console.log(deletedCust)
+}
+
+delCust() 
+
+
+customerSchema.post('findOneAndDelete',async(customer)=>{
+    if(customer.orders.length>0){
+        let res=await OrderModel.deleteMany({_id:{$in:customer.orders}})
+        console.log(res)
+    }
+})
