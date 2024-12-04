@@ -1,15 +1,14 @@
-<%layout('/layouts/boilerplate.ejs')%>
+<% layout('/layouts/boilerplate.ejs') %>
 
 
-<body>
     <div class="row">
         <div class="col-8 offset-1">
 
-           <h2 class="mt-3">
+           <h2 class="mt-3 mb-3">
             Details of the<b> <%=listing.title%></b>
             </h2> 
-
-            <div class="card " style="background-color: aliceblue;">
+        
+            <div class="card listing-card " style="background-color: aliceblue;">
                <img src="<%=listing.image.url%>" class="show-image card-img-top" alt="...">
                <div class="card-body mt-3">
                 <p>Description:- <%=listing.description%></p>
@@ -37,9 +36,22 @@
                <button class="btn btn-warning offset-4">Delete</button>
            </form>
         </div>
-
+                      <hr/><br/>
+                      <p><b>ALl reviews of this listing</b></p>
+                    <div class="row">
+                      <%for( let review of listing.reviews){%>
+                            <div class="card col-5 ms-3 mb-3">
+                                 <div class="card-body">
+                                      <p class="card-text"><%=review.comment%></p>
+                                      <p class="card-text"><%=review.rating%> stars</p>
+                                 </div>
+                                 <form class="mb-3" method="POST" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
+                                       <button class="btn btn-primary">Delete</button>
+                                 </form>
+                            </div>
+                      <%}%>
+                    </div>
         </div>
     </div>
        
-</body>
 
