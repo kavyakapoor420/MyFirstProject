@@ -74,7 +74,7 @@ router.get('/:id',wrapAsync(async(req,res)=>{
     req.flash('error','listings u requested for does not exists')
     res.redirect('/listings') 
 } 
-console.log(listing)
+// console.log(listing)
 
     res.render('listings/show.ejs',{listing})
 }))

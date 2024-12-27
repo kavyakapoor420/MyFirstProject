@@ -5,7 +5,7 @@ const ReviewModel = require('../models/ReviewModel');
 const {listingSchema,reviewSchema}=require('../schema.js')
 const ExpressError=require('../utils/ExpressError.js')
 
-const {validateReview, isLoggedIn}=require('../Middleware/LoginAuthMiddleware.js')
+const {validReview, isLoggedIn}=require('../Middleware/LoginAuthMiddleware.js')
 
 const router=express.Router({mergeParams:true}) 
 
@@ -18,7 +18,7 @@ const router=express.Router({mergeParams:true})
 //     }
 // }
 //Reviews post route 
-router.post('/',isLoggedIn,validateReview,warpAsync(async(req,res)=>{
+router.post('/',isLoggedIn,validReview,warpAsync(async(req,res)=>{
     let listing=await Listing.findById(req.params.id)
     let newReview=new ReviewModel(req.body.review)
 

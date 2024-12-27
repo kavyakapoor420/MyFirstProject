@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+
 const mongoose=require('mongoose')
 
 const reviewSchema=new mongoose.Schema({
@@ -11,7 +11,7 @@ const reviewSchema=new mongoose.Schema({
         default:Date.now()
      },
      author:{
-      type:Schema.Types.ObjectId,
+      type:mongoose.Schema.Types.ObjectId,
       ref:"UserModel"
      }
 })
